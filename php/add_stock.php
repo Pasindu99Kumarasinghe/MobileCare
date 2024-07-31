@@ -1,35 +1,21 @@
 <?php
-// add_stock.php
+include 'database_connection.php';
 
-// Replace with your actual database connection details
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "your_database_name";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $item = $_POST['item'];
+    $brand = $_POST['brand'];
+    $model = $_POST['model'];
     $quantity = $_POST['quantity'];
-    $category = $_POST['category'];
 
-    $sql = "INSERT INTO stock (item, quantity, category) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sis", $item, $quantity, $category);
+    $stmt = $conn->prepare("INSERT INTO stock (item, brand, model, quantity) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("sssi", $item, $brand, $model, $quantity);
+
     if ($stmt->execute()) {
         echo "Stock added successfully!";
-        header("Location: ../stock.html"); // Redirect back to stock page
     } else {
         echo "Error: " . $stmt->error;
     }
 
     $stmt->close();
+    $conn->close();
 }
-
-$conn->close();

@@ -1,40 +1,23 @@
 <?php
-// add_customer.php
+include 'database_connection.php';
 
-// Replace with your actual database connection details
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "your_database_name";
+$sql = "SELECT * FROM customers";
+$result = $conn->query($sql);
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $customerName = $_POST['customerName'];
-    $address = $_POST['address'];
-    $contactNumber = $_POST['contactNumber'];
-    $email = $_POST['email'];
-    $purchasedItems = $_POST['purchasedItems'];
-    $billValue = $_POST['billValue'];
-
-    // Prepare and bind
-    $stmt = $conn->prepare("INSERT INTO customers (customerName, address, contactNumber, email, purchasedItems, billValue) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssd", $customerName, $address, $contactNumber, $email, $purchasedItems, $billValue);
-
-    if ($stmt->execute()) {
-        echo "Customer details added successfully!";
-        header("Location: ../customer.html"); // Redirect back to customer page
-    } else {
-        echo "Error: " . $stmt->error;
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>{$row['customerName']}</td>
+                <td>{$row['idNumber']}</td>
+                <td>{$row['contactNumber']}</td>
+                <td>{$row['email']}</td>
+                <td>{$row['address']}</td>
+                <td>{$row['purchasedItems']}</td>
+                <td>{$row['billValue']}</td>
+              </tr>";
     }
-
-    $stmt->close();
+} else {
+    echo "<tr><td colspan='7'>No customers found</td></tr>";
 }
 
 $conn->close();

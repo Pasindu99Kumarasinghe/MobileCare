@@ -12,7 +12,7 @@
 
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="index.html">
             <img src="img/brand/logo3.png" alt="Logo" width="75" height="75" class="d-inline-block align-center">
             Mobile Care
         </a>
@@ -62,25 +62,29 @@
                             <h4>Add Customer</h4>
                         </div>
                         <div class="card-body">
-                            <form action="php/add_customer.php" method="post">
+                            <form id="customerForm" action="php/add_customer.php" method="post">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="customerName">Customer Name</label>
                                         <input type="text" class="form-control" id="customerName" name="customerName" required>
                                     </div>
                                     <div class="form-group col-md-6">
+                                        <label for="idNumber">ID Number</label>
+                                        <input type="text" class="form-control" id="idNumber" name="idNumber" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
                                         <label for="contactNumber">Contact Number</label>
                                         <input type="tel" class="form-control" id="contactNumber" name="contactNumber" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="address">Address</label>
                                         <input type="text" class="form-control" id="address" name="address" required>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="email">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -110,18 +114,17 @@
                                 <thead>
                                     <tr>
                                         <th>Customer Name</th>
-                                        <th>Address</th>
+                                        <th>ID No</th>
                                         <th>Contact Number</th>
                                         <th>Email</th>
+                                        <th>Address</th>
                                         <th>Purchased Items</th>
                                         <th>Bill Value</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <!-- PHP script to fetch and display customer details from the database -->
-                                    <?php
-                                    include 'php/view_customers.php';
-                                    ?>
+                                    <?php include 'php/view_customers.php'; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -159,5 +162,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--Custom JS-->
+    <script src="js/customer.js"></script>
+    
 </body>
 </html>

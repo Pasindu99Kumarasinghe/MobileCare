@@ -1,29 +1,31 @@
 <?php
-// contact_process.php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect and sanitize input data
+    $name = htmlspecialchars($_POST['name']);
+    $email = htmlspecialchars($_POST['email']);
+    $subject = htmlspecialchars($_POST['subject']);
+    $message = htmlspecialchars($_POST['message']);
 
-// Replace with your actual email address
-$to = "info@example.com";
-$subject = "Contact Us Form Submission";
+    // Validate the email address
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die("Invalid email format");
+    }
 
-// Capture form data
-$name = $_POST['name'];
-$email = $_POST['email'];
-$subject = $_POST['subject'];
-$message = $_POST['message'];
+    // Email settings
+    $to = "info@example.com"; // Replace with your email address
+    $headers = "From: $email" . "\r\n" .
+               "Reply-To: $email" . "\r\n" .
+               "X-Mailer: PHP/" . phpversion();
+    $email_subject = "Contact Form: $subject";
+    $email_body = "Name: $name\n";
+    $email_body .= "Email: $email\n";
+    $email_body .= "Subject: $subject\n\n";
+    $email_body .= "Message:\n$message\n";
 
-// Create email content
-$email_body = "Name: $name\n";
-$email_body .= "Email: $email\n";
-$email_body .= "Subject: $subject\n";
-$email_body .= "Message:\n$message\n";
-
-// Set email headers
-$headers = "From: $email";
-
-// Send email
-if (mail($to, $subject, $email_body, $headers)) {
-    echo "Thank you for contacting us! We will get back to you soon.";
-} else {
-    echo "There was a problem sending your message. Please try again later.";
+    // Send email
+    if (mail($to, $email_subject, $email_body, $headers)) {
+        echo "Thank you for contacting us. We will get back to you shortly.";
+    } else {
+        echo "Sorry, something went wrong. Please try again.";
+    }
 }
-?>

@@ -1,39 +1,44 @@
 <?php
 // login_process.php
 
-// Replace with your actual database connection details
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "your_database_name";
+include 'database_connection.php'; // Include your database connection file
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+session_start(); // Start a session to manage user state
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $user = $_POST['username'];
-    $pass = $_POST['password'];
+    // Retrieve form data
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $user, $pass);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Sanitize input
+    $username = mysqli_real_escape_string($conn, $username);
+    $password = mysqli_real_escape_string($conn, $password);
 
-    if ($result->num_rows > 0) {
-        // Successful login
-        header("Location: index.html"); // Redirect to the homepage or dashboard
+    // Check if username exists
+    $query = "SELECT * FROM users WHERE username='$username'";
+    $result = mysqli_query($conn, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        // Fetch user data
+        $user = mysqli_fetch_assoc($result);
+
+        // Verify password
+        if (password_verify($password, $user['password'])) {
+            // Set session variables
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+
+            // Redirect to home page or dashboard
+            header("Location: ../index.html");
+            exit();
+        } else {
+            // Incorrect password
+            echo "Invalid username or password";
+        }
     } else {
-        // Failed login
-        echo "Invalid username or password.";
+        // Username does not exist
+        echo "Invalid username or password";
     }
-
-    $stmt->close();
 }
 
-$conn->close();
-?>
+mysqli_close($conn);

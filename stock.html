@@ -12,7 +12,7 @@
 
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="index.html">
             <img src="img/brand/logo3.png" alt="Logo" width="75" height="75" class="d-inline-block align-center">
             Mobile Care
         </a>
@@ -54,6 +54,35 @@
                     <h3 class="text-center">Manage Stock</h3>
                 </div>
             </div>
+
+            <!--View Available Stock-->
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Available Stock</h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Brand</th>
+                                        <th>Model</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--PHP script to fetch and display stock items from the database-->
+                                    <?php
+                                    include 'php/view_stock.php';
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
 
                 <!--Add Stock Form-->
@@ -67,21 +96,32 @@
                             <form action="php/add_stock.php" method="post">
                                 <div class="form-group">
                                     <label for="item">Item</label>
-                                    <input type="text" class="form-control" id="item" name="item" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="quantity">Quantity</label>
-                                    <input type="number" class="form-control" id="quantity" name="quantity" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="category">Category</label>
-                                    <select class="form-control" id="category" name="category" required>
+                                    <select class="form-control" id="item" name="item" required>
                                         <option value="Display">Display</option>
                                         <option value="Battery">Battery</option>
                                         <option value="Charger">Charger</option>
                                         <option value="Tempered Glass">Tempered Glass</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="brand">Brand</label>
+                                    <select class="form-control" id="brand" name="brand" required>
+                                        <option value="Apple">Apple</option>
+                                        <option value="Samsung">Samsung</option>
+                                        <option value="Oppo">Oppo</option>
+                                        <option value="Xioami">Xioami</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="model">Model</label>
+                                    <input type="text" class="form-control" id="model" name="model" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="quantity">Quantity</label>
+                                    <input type="number" class="form-control" id="quantity" name="quantity" required>
+                                </div>
+                                
                                 <button type="submit" class="btn btn-primary">Add Stock</button>
                             </form>
                         </div>
@@ -99,33 +139,33 @@
                             <form action="php/delete_stock.php" method="post">
                                 <div class="form-group">
                                     <label for="item">Item</label>
-                                    <input type="text" class="form-control" id="item" name="item" required>
+                                    <select class="form-control" id="item" name="item" required>
+                                        <option value="Display">Display</option>
+                                        <option value="Battery">Battery</option>
+                                        <option value="Charger">Charger</option>
+                                        <option value="Tempered Glass">Tempered Glass</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="brand">Brand</label>
+                                    <select class="form-control" id="brand" name="brand" required>
+                                        <option value="Apple">Apple</option>
+                                        <option value="Samsung">Samsung</option>
+                                        <option value="Oppo">Oppo</option>
+                                        <option value="Xioami">Xioami</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="model">Model</label>
+                                    <input type="text" class="form-control" id="model" name="model" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="quantity">Quantity</label>
+                                    <input type="number" class="form-control" id="quantity" name="quantity" required>
                                 </div>
                                 <button type="submit" class="btn btn-danger">Delete Stock</button>
                             </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Category</th>
-                                        <th>Quantity</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!--PHP script to fetch and display stock items from the database-->
-                                    <?php
-                                    include 'php/view_stock.php';
-                                    ?>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>

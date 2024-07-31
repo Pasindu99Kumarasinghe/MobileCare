@@ -1,35 +1,19 @@
 <?php
-// view_stock.php
+include 'database_connection.php';
 
-// Replace with your actual database connection details
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "your_database_name";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Query to fetch stock data
-$sql = "SELECT item, category, quantity FROM stock";
-$result = $conn->query($sql);
+$result = $conn->query("SELECT * FROM stock");
 
 if ($result->num_rows > 0) {
-    // Output data of each row
-    while($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch_assoc()) {
         echo "<tr>
-                <td>" . $row["item"] . "</td>
-                <td>" . $row["category"] . "</td>
-                <td>" . $row["quantity"] . "</td>
-              </tr>";
+                <td>{$row['item']}</td>
+                <td>{$row['brand']}</td>
+                <td>{$row['model']}</td>
+                <td>{$row['quantity']}</td>
+            </tr>";
     }
 } else {
-    echo "<tr><td colspan='3'>No stock available</td></tr>";
+    echo "<tr><td colspan='4'>No stock available</td></tr>";
 }
 
 $conn->close();
