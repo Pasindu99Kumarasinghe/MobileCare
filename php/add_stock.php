@@ -1,7 +1,9 @@
 <?php
 include 'database_connection.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+$response = array();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $item = $_POST['item'];
     $brand = $_POST['brand'];
     $model = $_POST['model'];
@@ -11,11 +13,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("sssi", $item, $brand, $model, $quantity);
 
     if ($stmt->execute()) {
-        echo "Stock added successfully!";
+        $response['status'] = 'success';
+        $response['message'] = 'Stock added successfully';
     } else {
-        echo "Error: " . $stmt->error;
+        $response['status'] = 'error';
+        $response['message'] = 'Error: ' . $stmt->error;
     }
 
     $stmt->close();
     $conn->close();
+} else {
+    $response['status'] = 'error';
+    $response['message'] = 'Invalid request method.';
 }
+
+echo json_encode($response);
+?>

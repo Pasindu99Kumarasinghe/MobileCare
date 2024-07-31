@@ -1,19 +1,21 @@
 <?php
 include 'database_connection.php';
 
-$sql = "SELECT * FROM customers";
+// Fetch customer data from the database
+$sql = "SELECT customerName, idNumber, contactNumber, email, address, purchasedItems, billValue FROM customers";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
+    // Output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
-                <td>{$row['customerName']}</td>
-                <td>{$row['idNumber']}</td>
-                <td>{$row['contactNumber']}</td>
-                <td>{$row['email']}</td>
-                <td>{$row['address']}</td>
-                <td>{$row['purchasedItems']}</td>
-                <td>{$row['billValue']}</td>
+                <td>" . htmlspecialchars($row["customerName"]) . "</td>
+                <td>" . htmlspecialchars($row["idNumber"]) . "</td>
+                <td>" . htmlspecialchars($row["contactNumber"]) . "</td>
+                <td>" . htmlspecialchars($row["email"]) . "</td>
+                <td>" . htmlspecialchars($row["address"]) . "</td>
+                <td>" . htmlspecialchars($row["purchasedItems"]) . "</td>
+                <td>" . htmlspecialchars($row["billValue"]) . "</td>
               </tr>";
     }
 } else {
@@ -21,3 +23,4 @@ if ($result->num_rows > 0) {
 }
 
 $conn->close();
+?>

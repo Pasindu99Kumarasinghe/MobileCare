@@ -1,7 +1,9 @@
 <?php
 include 'database_connection.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+$response = array();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $customerName = $_POST['customerName'];
     $idNumber = $_POST['idNumber'];
     $contactNumber = $_POST['contactNumber'];
@@ -10,15 +12,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $purchasedItems = $_POST['purchasedItems'];
     $billValue = $_POST['billValue'];
 
-    $stmt = $conn->prepare("INSERT INTO customers (customerName, idNumber, contactNumber, email, address, purchasedItems, billValue) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssd", $customerName, $idNumber, $contactNumber, $email, $address, $purchasedItems, $billValue);
+    // Prepare an insert statement
+    $sql = "INSERT INTO customers (customerName, idNumber, contactNumber, email, address, purchasedItems, billValue) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    if ($stmt->execute()) {
-        echo "Customer added successfully!";
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("ssssssi", $customerName, $idNumber, $contactNumber, $email, $address, $purchasedItems, $billValue);
+        
+        // Attempt to execute the prepared statement
+        if ($stmt->execute()) {
+            $response['status'] = 'success';
+            $response['message'] = 'Customer added successfully';
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Error: Could not execute the query: ' . $conn->error;
+        }
+
+        // Close statement
+        $stmt->close();
     } else {
-        echo "Error: " . $stmt->error;
+        $response['status'] = 'error';
+        $response['message'] = 'Error: Could not prepare the query: ' . $conn->error;
     }
 
-    $stmt->close();
+    // Close connection
     $conn->close();
+} else {
+    $response['status'] = 'error';
+    $response['message'] = 'Invalid request method.';
 }
+
+echo json_encode($response);
+?>
