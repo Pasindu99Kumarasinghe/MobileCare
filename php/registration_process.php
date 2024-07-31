@@ -1,4 +1,9 @@
 
+<?php
+
+// registration_process.php (example)
+
+// Include database connection
 include 'database_connection.php';
 
 // Retrieve form data
