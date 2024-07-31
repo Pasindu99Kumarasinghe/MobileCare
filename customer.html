@@ -1,0 +1,163 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="img/brand/logo3.png" alt="Logo" width="75" height="75" class="d-inline-block align-center">
+            Mobile Care
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="w-100 d-flex justify-content-center">
+                <ul class="navbar-nav">
+                    <li class="nav-item px-3">
+                        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item px-3">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item px-3">
+                        <a class="nav-link" href="services.html">Services</a>
+                    </li>
+                    <li class="nav-item px-3">
+                        <a class="nav-link" href="stock.html">Stock</a>
+                    </li>
+                    <li class="nav-item px-3">
+                        <a class="nav-link" href="customer.html">Customers</a>
+                    </li>
+                    <li class="nav-item px-3">
+                        <a class="nav-link" href="contact.html">Contact Us </a>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+    </nav>
+
+    <!--Customer Section-->
+    <section class="customer-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <h3 class="text-center">Customer Details</h3>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Add Customer Form -->
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Add Customer</h4>
+                        </div>
+                        <div class="card-body">
+                            <form action="php/add_customer.php" method="post">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="customerName">Customer Name</label>
+                                        <input type="text" class="form-control" id="customerName" name="customerName" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="contactNumber">Contact Number</label>
+                                        <input type="tel" class="form-control" id="contactNumber" name="contactNumber" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="address">Address</label>
+                                        <input type="text" class="form-control" id="address" name="address" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="purchasedItems">Purchased Items</label>
+                                        <input type="text" class="form-control" id="purchasedItems" name="purchasedItems" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="billValue">Bill Value</label>
+                                        <input type="number" class="form-control" id="billValue" name="billValue" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Customer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Customer List</h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Customer Name</th>
+                                        <th>Address</th>
+                                        <th>Contact Number</th>
+                                        <th>Email</th>
+                                        <th>Purchased Items</th>
+                                        <th>Bill Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- PHP script to fetch and display customer details from the database -->
+                                    <?php
+                                    include 'php/view_customers.php';
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Footer Section Start-->
+    <footer class="footer bg-dark text-white py-4">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <h5>Contact Us</h5>
+                    <p>Email: info@example.com</p>
+                    <p>Phone: (123) 456-7890</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Follow Us</h5>
+                    <a href="#" class="text-white mx-2">Facebook</a>
+                    <a href="#" class="text-white mx-2">Twitter</a>
+                    <a href="#" class="text-white mx-2">Instagram</a>
+                </div>
+            </div>
+            <div class="mt-3">
+                <p>&copy; 2024 My Brand. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <!--Footer Section End-->
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
